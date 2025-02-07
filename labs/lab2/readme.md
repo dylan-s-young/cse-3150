@@ -1,4 +1,4 @@
-# Prefix Sums Testing with Doctest
+# Balanced Lists
 
 This project demonstrates how to use [Doctest](https://github.com/doctest/doctest), a lightweight C++ testing framework, to test a recursive factorial function.
 
@@ -16,13 +16,20 @@ This project demonstrates how to use [Doctest](https://github.com/doctest/doctes
    cd project
    ```
 
-2. **Compile Lab1 file**
+2. **CD into correct directory**:
 
    ```
-   g++ -std=c++17 DylanYoungLab1PrefixSums.cpp
+   cd labs
+   cd labs2
    ```
 
-3. **Run the compiled file**
+3. **Compile Lab1 file**
+
    ```
-   ./a.out
+   g++ -std=c++17 -o main DylanYoungLab2.cpp
+   ```
+
+4. **Run the compiled file**
+   ```
+   ./main
    ```
