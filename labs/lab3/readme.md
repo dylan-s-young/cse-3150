@@ -11,6 +11,15 @@ This project demonstrates how to use [Doctest](https://github.com/doctest/doctes
 
 1. **Clone or Download the Repository**:
 
+   **HTTPS**:
+
+   ```bash
+   git clone https://github.com/dylan-s-young/cse-3150.git
+   cd project
+   ```
+
+   **SSH**:
+
    ```bash
    git clone git@github.com:dylan-s-young/cse-3150.git
    cd project

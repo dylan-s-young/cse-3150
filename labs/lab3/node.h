@@ -2,25 +2,43 @@
 
 #include <iostream>
 
-struct Node
+class LinkedList
 {
-    int data;
-    Node *next;
+public:
+    struct Node
+    {
+        int data;
+        Node *next;
+
+        Node(int value) : data(value), next(nullptr) {}
+        ~Node() = default;
+
+        // Disable copying for Node to prevent accidental deep copies
+        Node(const Node &) = delete;
+        Node &operator=(const Node &) = delete;
+    };
 
     // Constructor
-    Node(int value) : data(value), next(nullptr) {}
+    LinkedList();
 
-    // Disable Copy Constructor & Assignment Operator to avoid accidental deep copies
-    Node(const Node &) = delete;
-    Node &operator=(const Node &) = delete;
+    // Copy constructor
+    LinkedList(const LinkedList &other);
 
-    // Default Destructor (let external functions handle deletion)
-    ~Node() = default;
+    // Destructor
+    ~LinkedList();
+
+    // Member functions
+    void build_from_array(const int arr[], int size);
+    void print() const;
+    void delete_ith_node(int i);
+    bool has_positive_prefix_sum() const;
+    bool has_negative_prefix_sum() const;
+    void perform_pointer_jumping();
+    int get_value_at(int index) const;
+
+private:
+    Node *head;
+    Node *tail; // To track the last node for pointer jumping
+
+    void delete_entire_list();
 };
-
-// Function declarations
-Node *build_linked_list(const int arr[], int size);
-void print_linked_list(Node *root);
-void delete_entire_linked_list(Node *&root);
-int get_linked_list_data_item_value(Node *root, int node_number);
-void delete_list_element(Node *&root, int node_number);
