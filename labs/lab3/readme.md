@@ -35,7 +35,7 @@ This project demonstrates how to use [Doctest](https://github.com/doctest/doctes
 3. **Compile Lab1 file**
 
    ```
-   g++ -std=c++17 -o main DylanYoungLab3LinkedList.cpp
+   g++ -std=c++17 -o main DylanYoungLab3LinkedList.cpp main.cpp
    ```
 
 4. **Run the compiled file**

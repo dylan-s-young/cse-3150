@@ -1,5 +1,5 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "doctest.h"
+#include "include/doctest.h"
 #include "node.h"
 
 TEST_CASE("Build and initialize linked list")
@@ -55,7 +55,16 @@ TEST_CASE("Pointer jumping")
     LinkedList list;
     list.build_from_array(arr, 3);
     list.perform_pointer_jumping();
+
+    // After pointer jumping:
+    // - First node (index 0) should remain unchanged (value 7)
+    // - First node should now point directly to the tail node (value 9)
+    // - Should be able to access the tail value from index 1
     CHECK(list.get_value_at(0) == 7);
     CHECK(list.get_value_at(1) == 9);
+
+    // This test will fail with the current implementation
+    // If the requirement is to have 3 accessible nodes after jumping,
+    // then the implementation needs to be modified
     CHECK(list.get_value_at(2) == 9);
 }

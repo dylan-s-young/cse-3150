@@ -5,12 +5,35 @@ LinkedList::LinkedList() : head(nullptr), tail(nullptr) {}
 
 LinkedList::LinkedList(const LinkedList &other) : head(nullptr), tail(nullptr)
 {
+    // Copy constructor should create a new list with the same values
+    if (!other.head)
+        return; // Nothing to copy
+
+    // Create an array of values from other list
+    int size = 0;
     Node *current = other.head;
     while (current)
     {
-        build_from_array(&current->data, 1); // Append one node at a time
+        size++;
         current = current->next;
+        if (current == other.tail->next)
+            break;
     }
+
+    int *values = new int[size];
+    current = other.head;
+    for (int i = 0; i < size; i++)
+    {
+        values[i] = current->data;
+        current = current->next;
+        if (current == other.tail->next)
+            break;
+    }
+
+    // Build the new list
+    build_from_array(values, size);
+
+    delete[] values;
 }
 
 LinkedList::~LinkedList()
@@ -23,6 +46,9 @@ void LinkedList::build_from_array(const int arr[], int size)
     if (size <= 0)
         return;
 
+    // Clear existing list first
+    delete_entire_list();
+
     head = new Node(arr[0]);
     Node *current = head;
     for (int i = 1; i < size; ++i)
@@ -31,27 +57,29 @@ void LinkedList::build_from_array(const int arr[], int size)
         current = current->next;
     }
     tail = current;
-    tail->next = tail; // Last element points to itself after initialization
+    // The last element should point to nullptr in a standard linked list
 }
 
 void LinkedList::print() const
 {
     Node *current = head;
-    while (current && current != tail->next)
-    { // Stop before cycling
+    while (current)
+    {
         std::cout << current->data << " -> ";
         current = current->next;
     }
-    if (current)
-        std::cout << current->data << " (cycles)";
-    std::cout << "\n";
+    std::cout << "nullptr\n";
 }
 
 void LinkedList::delete_entire_list()
 {
     if (!head)
         return;
-    tail->next = nullptr; // Break the cycle
+
+    // If there's a cycle, break it first
+    if (tail && tail->next)
+        tail->next = nullptr;
+
     while (head)
     {
         Node *temp = head;
@@ -83,7 +111,7 @@ void LinkedList::delete_ith_node(int i)
     {
         current = current->next;
     }
-    if (!current->next || current->next == tail->next)
+    if (!current->next)
         return;
 
     Node *temp = current->next;
@@ -95,12 +123,15 @@ void LinkedList::delete_ith_node(int i)
 
 int LinkedList::get_value_at(int index) const
 {
+    if (index < 0)
+        throw std::out_of_range("Index out of range");
+
     Node *current = head;
-    for (int i = 0; i < index && current && current != tail->next; ++i)
+    for (int i = 0; i < index && current; ++i)
     {
         current = current->next;
     }
-    if (!current || current == tail->next)
+    if (!current)
     {
         throw std::out_of_range("Index out of range");
     }
@@ -111,7 +142,7 @@ bool LinkedList::has_positive_prefix_sum() const
 {
     int sum = 0;
     Node *current = head;
-    while (current && current != tail->next)
+    while (current)
     {
         sum += current->data;
         if (sum <= 0)
@@ -125,7 +156,7 @@ bool LinkedList::has_negative_prefix_sum() const
 {
     int sum = 0;
     Node *current = head;
-    while (current && current != tail->next)
+    while (current)
     {
         sum += current->data;
         if (sum >= 0)
@@ -137,12 +168,19 @@ bool LinkedList::has_negative_prefix_sum() const
 
 void LinkedList::perform_pointer_jumping()
 {
-    if (!head || !tail)
+    if (!head || !head->next)
         return;
+
+    // Make all non-tail nodes point to the tail
     Node *current = head;
-    while (current != tail->next)
+    while (current != tail)
     {
+        Node *next = current->next;
         current->next = tail;
-        current = current->next;
+        current = next;
     }
+
+    // Make the tail point to itself to create a cycle
+    // This allows accessing the tail value at index 2
+    tail->next = tail;
 }
