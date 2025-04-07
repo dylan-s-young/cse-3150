@@ -1,0 +1,9 @@
+The quick brown fox jumps over the lazy dog.
+A tokenizer is a program that breaks text into tokens.
+Each token should be assigned a unique integer value.
+The quick brown fox appears again to test repeated words.
+This file has words that appear multiple times:
+the quick brown fox jumps over the lazy dog again.
+This simple test file should be sufficient to verify
+that your tokenizer correctly identifies unique words
+and assigns them consistent token IDs.
